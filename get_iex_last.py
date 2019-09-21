@@ -1,8 +1,6 @@
-import signal
 import requests
 import pika
 from time import sleep
-from sys import exit
 
 URL = 'https://api.iextrading.com/1.0/tops/last'
 RABBITMQ_HOST = 'localhost'
@@ -12,14 +10,6 @@ INTERVAL = 5
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host=RABBITMQ_HOST)
 )
-
-
-def sigterm_handler():
-    connection.close()
-    exit(0)
-
-
-signal.signal(signal.SIGTERM, sigterm_handler)
 
 channel = connection.channel()
 
